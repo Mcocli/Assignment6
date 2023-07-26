@@ -49,21 +49,6 @@ function initialize() {
       }
     });
   }
-  //******* */
-  function getTAs() {
-    return new Promise((resolve, reject) => {
-      if (dataCollection && dataCollection.students) {
-        const tas = dataCollection.students.filter(student => student.TA === true);
-        if (tas.length > 0) {
-          resolve(tas);
-        } else {
-          reject("No results returned");
-        }
-      } else {
-        reject("No results returned");
-      }
-    });
-  }
   /*********** */
   function getCourses() {
     return new Promise((resolve, reject) => {
@@ -96,7 +81,8 @@ function getStudentByNum(num) {
     const foundStudent = students.find(student => student.studentNum === num);
 
     if (!foundStudent) {
-      reject("No results returned");
+      reject(new Error("No results returned"));
+
     } else {
       resolve(foundStudent);
     }
@@ -114,11 +100,53 @@ function addStudent(studentData) {
   });
 }
 
+function getCourseById(id) {
+  return new Promise((resolve, reject) => {
+    // Search the courses array for the course with matching courseId
+    const course = courses.find((course) => course.courseId === id);
 
+    // If course found, resolve with the course object
+    if (course) {
+      resolve(course);
+    } else {
+      // If course not found, reject with an error message
+      reject(new Error("Query returned 0 results"));
+    }
+  });
+}
+
+function updateStudent(studentData) {
+  return new Promise((resolve, reject) => {
+    const studentNum = studentData.studentNum;
+
+    // Find the index of the student with matching studentNum in the students array
+    const studentIndex = students.findIndex((student) => student.studentNum === studentNum);
+
+    if (studentIndex !== -1) {
+    
+      students[studentIndex] = {
+        ...students[studentIndex], 
+        firstName: studentData.firstName,
+        lastName: studentData.lastName,
+        email: studentData.email,
+        program: studentData.program,
+        isTA: studentData.isTA === 'on', 
+      };
+
+      resolve();
+    } else {
+      reject(new Error('Student not found')); 
+    }
+  });
+}
+
+
+
+module.exports.getCourseById=getCourseById;
   module.exports.initialize=initialize;
   module.exports.getCourses=getCourses;
   module.exports.getAllStudents=getAllStudents;
-  module.exports.getTAs=getTAs;
   module.exports.getStudentsByCourse=getStudentsByCourse;
   module.exports.getStudentByNum=getStudentByNum;
   module.exports.addStudent=addStudent;
+  module.exports.updateStudent=updateStudent;
