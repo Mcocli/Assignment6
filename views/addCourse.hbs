@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WEB700</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="/css/theme.css">
+
+	</head>
+
+	<body>
+		
+
+		<div class="container">
+			<div class="row">
+				<main class="col-md-12">
+                     <h2>Add New Course</h2>
+                         <form action="/courses/add" method="POST">
+  <!-- Input field for Course Code -->
+                             <label for="courseCode">Course Code:</label>
+                             <input type="text" name="courseCode" id="courseCode" required>
+  
+  <!-- Input field for Course Description -->
+                             <label for="courseDescription">Course Description:</label>
+                            <input type="text" name="courseDescription" id="courseDescription" required>
+  
+  <!-- Submit button -->
+                            <button type="submit">Add Course</button>
+                            </form>
+			</main>
+			</div>
+		</div>
+		
+	</body>
+</html>
